@@ -189,7 +189,7 @@ public class buscaminas {
             int columna = Integer.parseInt(partes[1]);//funcion buscada en internet.
 
             // verifica que fila y columna sean números positivos
-            return fila > 0 && columna > 0;
+             return fila >= 0 && columna >= 0 && fila<FILAS-1 && columna<COLUMNAS-1;
         } catch (NumberFormatException e) {
             return datoValido=false; 
         }
