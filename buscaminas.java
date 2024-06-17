@@ -15,6 +15,7 @@ public class buscaminas {
 		char tableroVisible[][]=new char [FILAS][COLUMNAS];
 		String posicion;
 		inicializar(tableroOculto, tableroVisible);
+		posicion=posicion();
 	
 	}
 	private static void randomizarMinas(int tableroOculto[][], String posicion) {
