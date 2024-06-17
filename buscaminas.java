@@ -14,6 +14,7 @@ public class buscaminas {
 		int tableroOculto[][]=new int [FILAS][COLUMNAS];
 		char tableroVisible[][]=new char [FILAS][COLUMNAS];
 		String posicion;
+		inicializar(tableroOculto, tableroVisible);
 	
 	}
 	private static void randomizarMinas(int tableroOculto[][], String posicion) {
@@ -24,4 +25,13 @@ public class buscaminas {
 	
 	
 	}
+	private static void inicializar(int tableroi[][], char tableroc[][]) {
+		for(int i=0;i<FILAS-1;i++) {
+			for(int c=0;c<COLUMNAS-1;c++) {
+				tableroi[i][c]=0;
+				tableroc[i][c]=NO_DESCUBIERTO;
+				}
+			}	
+		}
+	
 }
