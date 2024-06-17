@@ -1,4 +1,5 @@
 package Intento1;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.Scanner;
 public class buscaminas {
 	
@@ -8,6 +9,7 @@ public class buscaminas {
 	private static final char MINA = '*';
 	private static final char VACIO = '.';
 	private static final char NO_DESCUBIERTO = '?';
+	private static final int MINAOCULTA = -1;
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -16,15 +18,135 @@ public class buscaminas {
 		String posicion;
 		inicializar(tableroOculto, tableroVisible);
 		posicion=posicion();
+		inicializar(tableroOculto, tableroVisible);
+		colocarMinasTablero(tableroOculto, posicion);
+		imprimirTableroOculto(tableroOculto);
 	
 	}
-	private static void randomizarMinas(int tableroOculto[][], String posicion) {
+	private static int numeroDePosicion(String posicion) {
+		char charF, charC;
+		charF=posicion.charAt(0);
+		charC=posicion.charAt(2);
+		int numF= Character.getNumericValue(charF);
+		int numC = Character.getNumericValue(charC);
+		int contador=0;
+		int posicionEnNumero=0;
+		for (int i=0;i<FILAS;i++){
+			for (int j=0;j<COLUMNAS;j++){
+				contador++;
+				if (numF==i&&numC==j) {
+					posicionEnNumero=contador;
+				}
+			}
+		}
+		return posicionEnNumero;
+	}
+	private static void randomizarNumeroMinas(int posicionMinas[], int posicionEnNumero) {
+		boolean igual;
+		for (int i=0; i<MINAS;i++) {
+			igual=true;
+			while(igual==true) {
+				igual=false;
+				posicionMinas[i] = ThreadLocalRandom.current().nextInt(1, 81);
+				for (int j=0; j<i;j++) {
+					if (posicionMinas[i]==posicionMinas[j]) {
+						igual=true;
+					}
+					if (posicionMinas[i]==posicionEnNumero) {
+						igual=true;
+					}
+				}
+			}
+			
+		}
+	}
+	private static void imprimirTableroOculto(int tableroOculto[][]) {
+		System.out.print("  ");
+		for (int i=0;i<FILAS;i++) {
+			System.out.print(+i+" ");
+		}
+		System.out.println();
+		for (int i=0; i<FILAS; i++) {
+			System.out.print(i+ " ");
+			for (int j=0; j<COLUMNAS; j++) {
+				System.out.print( tableroOculto[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	private static void anotarMinas(int tableroOculto[][], int posicionMinas[]) {
+		int contador=0;
+		for (int i=0; i<FILAS; i++) {
+			for (int j=0; j<COLUMNAS; j++) {
+				contador++;
+				for (int z=0;z<MINAS;z++) {
+					if (contador==posicionMinas[z]) {
+						
+						tableroOculto[i][j]=MINAOCULTA;
+					}
+				}
+				
+			}
+		}
+	}
+	private static void colocarNumeros(int tableroOculto[][]){
+		for (int i=0;i<FILAS;i++){
+			for (int j=0;j<COLUMNAS;j++){
+				if (tableroOculto[i][j]==MINAOCULTA) {
+					try {
+						if (tableroOculto[i-1][j-1]!=MINAOCULTA) {
+							tableroOculto[i-1][j-1]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i-1][j]!=MINAOCULTA) {
+							tableroOculto[i-1][j]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i-1][j+1]!=MINAOCULTA) {
+							tableroOculto[i-1][j+1]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i][j-1]!=MINAOCULTA) {
+							tableroOculto[i][j-1]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i][j+1]!=MINAOCULTA) {
+							tableroOculto[i][j+1]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i+1][j-1]!=MINAOCULTA) {
+							tableroOculto[i+1][j-1]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i+1][j]!=MINAOCULTA) {
+							tableroOculto[i+1][j]++;
+						}
+					}catch(Exception e) {}
+					try {
+						if (tableroOculto[i+1][j+1]!=MINAOCULTA) {
+							tableroOculto[i+1][j+1]++;
+						}
+					}catch(Exception e) {}
+					
+				}
+			}
+		}
+	}
+	private static void colocarMinasTablero(int tableroOculto[][], String posicion) {
+		
+		int posicionEnNumero=numeroDePosicion(posicion);
+		int posicionMinas [] = new int [MINAS];
+		randomizarNumeroMinas(posicionMinas, posicionEnNumero);
+		anotarMinas(tableroOculto, posicionMinas);
+		colocarNumeros(tableroOculto);
 		
 		
-	
-	
-	
-	
 	}
 	private static void inicializar(int tableroi[][], char tableroc[][]) {
 		for(int i=0;i<FILAS-1;i++) {
