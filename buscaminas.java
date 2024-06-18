@@ -175,6 +175,22 @@ public class buscaminas {
 
 	return posicion;
 }
+	private static boolean comprobarFinal (char [][] tableroVisible) {
+		int contador=0;
+		for (int i=0; i<FILAS;i++) {
+			for (int j=0; j<COLUMNAS;j++) {
+				if (tableroVisible[i][j]==NO_DESCUBIERTO) {
+					contador++;
+				}
+			}
+		}
+		if (contador==MINAS) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	
 	private static boolean FormatoCorrecto(String posicion) {
 		boolean datoValido;
