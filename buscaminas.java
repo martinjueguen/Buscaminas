@@ -60,6 +60,20 @@ public class buscaminas {
 			
 		}
 	}
+	private static void imprimirTableroVisible(int tableroVisible[][]) {
+		System.out.print("  ");
+		for (int i=0;i<FILAS;i++) {
+			System.out.print(+i+" ");
+		}
+		System.out.println();
+		for (int i=0; i<FILAS; i++) {
+			System.out.print(i+ " ");
+			for (int j=0; j<COLUMNAS; j++) {
+				System.out.print( tableroVisible[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
 	private static void imprimirTableroOculto(int tableroOculto[][]) {
 		System.out.print("  ");
 		for (int i=0;i<FILAS;i++) {
