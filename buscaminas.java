@@ -60,6 +60,7 @@ public class buscaminas {
 			
 		}
 	}
+	//----------------------------------------------------------------------------------
 	private static void imprimirTableroVisible(int tableroVisible[][]) {
 		System.out.print("  ");
 		for (int i=0;i<FILAS;i++) {
@@ -74,6 +75,7 @@ public class buscaminas {
 			System.out.println();
 		}
 	}
+	//-----------------------------------------------------------------------------------------------
 	private static void imprimirTableroOculto(int tableroOculto[][]) {
 		System.out.print("  ");
 		for (int i=0;i<FILAS;i++) {
@@ -224,5 +226,47 @@ public class buscaminas {
             return datoValido=false; 
         }
     }
+
+
+	
+	private static boolean comprobarMina(String posicion, int tableroOculto[][]) {
+	char charF, charC;
+    charF=posicion.charAt(0);
+    charC=posicion.charAt(2);
+    int numF= Character.getNumericValue(charF);
+    int numC = Character.getNumericValue(charC);
+	if (tableroOculto[numF][numC]==MINAOCULTA) {
+		
+		return true;
+	}
+	else {
+		return false;
+	}
+}}
+private static void eleccionPos(String posicion, int[][] tableroOculto) {
+	char charF, charC;
+    charF=posicion.charAt(0);
+    charC=posicion.charAt(2);
+    int numF= Character.getNumericValue(charF);
+    int numC = Character.getNumericValue(charC);
+    boolean bomba= comprobarMina(posicion, tableroOculto ,numC , numF);
+    if(bomba==true) {
+    	System.out.println("usted perdio");
+    	imprimirTableroOculto(tableroOculto);
+    }
+ 
+    
+	
+}
+private static boolean comprobarMina(String posicion, int tableroOculto[][],int numC, int numF) {
+	if (tableroOculto[numF][numC]==MINAOCULTA) {
+		
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 	
 }
