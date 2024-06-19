@@ -18,6 +18,8 @@ public class buscaminas {
 		Scanner sc = new Scanner(System.in);
 		int tableroOculto[][]=new int [FILAS][COLUMNAS];
 		char tableroVisible[][]=new char [FILAS][COLUMNAS];
+		boolean juego= true;
+		
 		String posicion;
 		inicializar(tableroOculto, tableroVisible);
 		imprimirTableroVisible(tableroVisible);
@@ -25,9 +27,13 @@ public class buscaminas {
 		colocarMinasTablero(tableroOculto, posicion);
 		descubrirTablero(tableroOculto, tableroVisible, posicion);
 		imprimirTableroVisible(tableroVisible);
-		for(int i =0; i<10; i++) {
+		while (juego==true) {
 			posicion=posicion();
-			
+			if (eleccionPos(posicion,tableroOculto)==true) {
+				imprimirTableroVisible(tableroVisible);
+				System.out.print("Usted perdio");
+				
+			}
 			descubrirTablero(tableroOculto, tableroVisible, posicion);
 			imprimirTableroVisible(tableroVisible);
 			
