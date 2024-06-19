@@ -226,22 +226,6 @@ public class buscaminas {
             return datoValido=false; 
         }
     }
-
-
-	
-	private static boolean comprobarMina(String posicion, int tableroOculto[][]) {
-	char charF, charC;
-    charF=posicion.charAt(0);
-    charC=posicion.charAt(2);
-    int numF= Character.getNumericValue(charF);
-    int numC = Character.getNumericValue(charC);
-	if (tableroOculto[numF][numC]==MINAOCULTA) {
-		
-		return true;
-	}
-	else {
-		return false;
-	}
 }
 private static void eleccionPos(String posicion, int[][] tableroOculto) {
 	char charF, charC;
