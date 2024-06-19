@@ -242,7 +242,7 @@ public class buscaminas {
 	else {
 		return false;
 	}
-}}
+}
 private static void eleccionPos(String posicion, int[][] tableroOculto) {
 	char charF, charC;
     charF=posicion.charAt(0);
