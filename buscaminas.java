@@ -9,18 +9,115 @@ public class buscaminas {
 	private static final char MINA = '*';
 	private static final char VACIO = '.';
 	private static final char NO_DESCUBIERTO = '?';
-	private static final int MINAOCULTA = -1;
-
+	private static final int MINA_OCULTA = -1;
+	private static final int VACIO_OCULTO = 0;
+	private static final int NUMERO_CARACTER = 48;
+	
+	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int tableroOculto[][]=new int [FILAS][COLUMNAS];
 		char tableroVisible[][]=new char [FILAS][COLUMNAS];
 		String posicion;
 		inicializar(tableroOculto, tableroVisible);
+		imprimirTableroVisible(tableroVisible);
 		posicion=posicion();
-		inicializar(tableroOculto, tableroVisible);
 		colocarMinasTablero(tableroOculto, posicion);
-		imprimirTableroOculto(tableroOculto);
+		descubrirTablero(tableroOculto, tableroVisible, posicion);
+		imprimirTableroVisible(tableroVisible);
+		for(int i =0; i<10; i++) {
+			posicion=posicion();
+			
+			descubrirTablero(tableroOculto, tableroVisible, posicion);
+			imprimirTableroVisible(tableroVisible);
+			
+		}
+		
+		
+	
+		
+		imprimirTableroVisible(tableroVisible);
+	
+	}
+	private static void descubrirTablero (int [][]tableroOculto, char [][]tableroVisible, String posicion) {
+		char charF, charC;
+        charF=posicion.charAt(0);
+        charC=posicion.charAt(2);
+        int numF= Character.getNumericValue(charF);
+        int numC = Character.getNumericValue(charC);
+        tableroVisible[numF][numC]=(char) (tableroOculto[numF][numC]+NUMERO_CARACTER);
+        if (tableroOculto[numF][numC]==VACIO_OCULTO) {
+        	comprobarCero(tableroOculto, tableroVisible, numF, numC);
+        }
+	
+	
+	}
+	private static void comprobarCero (int [][]tableroOculto, char [][]tableroVisible, int numF, int numC) {
+		try {
+			if (tableroVisible[numF-1][numC-1]==NO_DESCUBIERTO) {
+				tableroVisible[numF-1][numC-1]=(char) (tableroOculto[numF-1][numC-1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF-1][numC-1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF-1, numC-1);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF-1][numC]==NO_DESCUBIERTO) {
+				tableroVisible[numF-1][numC]=(char) (tableroOculto[numF-1][numC]+NUMERO_CARACTER);
+				 if (tableroOculto[numF-1][numC]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF-1, numC);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF-1][numC+1]==NO_DESCUBIERTO) {
+				tableroVisible[numF-1][numC+1]=(char) (tableroOculto[numF-1][numC+1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF-1][numC+1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF-1, numC+1);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF][numC-1]==NO_DESCUBIERTO) {
+				tableroVisible[numF][numC-1]=(char) (tableroOculto[numF][numC-1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF][numC-1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF, numC-1);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF][numC+1]==NO_DESCUBIERTO) {
+				tableroVisible[numF][numC+1]=(char) (tableroOculto[numF][numC+1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF][numC+1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF, numC+1);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF+1][numC-1]==NO_DESCUBIERTO) {
+				tableroVisible[numF+1][numC-1]=(char) (tableroOculto[numF+1][numC-1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF+1][numC-1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF+1, numC-1);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF+1][numC]==NO_DESCUBIERTO) {
+				tableroVisible[numF+1][numC]=(char) (tableroOculto[numF+1][numC]+NUMERO_CARACTER);
+				 if (tableroOculto[numF+1][numC]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF+1, numC);
+			        }
+			}	
+		}catch(Exception e) {}
+		try {
+			if (tableroVisible[numF+1][numC+1]==NO_DESCUBIERTO) {
+				tableroVisible[numF+1][numC+1]=(char) (tableroOculto[numF+1][numC+1]+NUMERO_CARACTER);
+				 if (tableroOculto[numF+1][numC+1]==VACIO_OCULTO) {
+			        	comprobarCero(tableroOculto, tableroVisible, numF+1, numC+1);
+			        }
+			}	
+		}catch(Exception e) {}
+	
 	
 	}
 	private static int numeroDePosicion(String posicion) {
@@ -41,6 +138,22 @@ public class buscaminas {
 		}
 		return posicionEnNumero;
 	}
+	private static boolean comprobarFinal (char [][] tableroVisible) {
+		int contador=0;
+		for (int i=0; i<FILAS;i++) {
+			for (int j=0; j<COLUMNAS;j++) {
+				if (tableroVisible[i][j]==NO_DESCUBIERTO) {
+					contador++;
+				}
+			}
+		}
+		if (contador==MINAS) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 	private static void randomizarNumeroMinas(int posicionMinas[], int posicionEnNumero) {
 		boolean igual;
 		for (int i=0; i<MINAS;i++) {
@@ -60,22 +173,6 @@ public class buscaminas {
 			
 		}
 	}
-	//----------------------------------------------------------------------------------
-	private static void imprimirTableroVisible(int tableroVisible[][]) {
-		System.out.print("  ");
-		for (int i=0;i<FILAS;i++) {
-			System.out.print(+i+" ");
-		}
-		System.out.println();
-		for (int i=0; i<FILAS; i++) {
-			System.out.print(i+ " ");
-			for (int j=0; j<COLUMNAS; j++) {
-				System.out.print( tableroVisible[i][j]+" ");
-			}
-			System.out.println();
-		}
-	}
-	//-----------------------------------------------------------------------------------------------
 	private static void imprimirTableroOculto(int tableroOculto[][]) {
 		System.out.print("  ");
 		for (int i=0;i<FILAS;i++) {
@@ -90,6 +187,20 @@ public class buscaminas {
 			System.out.println();
 		}
 	}
+	private static void imprimirTableroVisible(char tableroVisible[][]) {
+		System.out.print("  ");
+		for (int i=0;i<FILAS;i++) {
+			System.out.print(+i+" ");
+		}
+		System.out.println();
+		for (int i=0; i<FILAS; i++) {
+			System.out.print(i+ " ");
+			for (int j=0; j<COLUMNAS; j++) {
+				System.out.print( tableroVisible[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
 	private static void anotarMinas(int tableroOculto[][], int posicionMinas[]) {
 		int contador=0;
 		for (int i=0; i<FILAS; i++) {
@@ -98,7 +209,7 @@ public class buscaminas {
 				for (int z=0;z<MINAS;z++) {
 					if (contador==posicionMinas[z]) {
 						
-						tableroOculto[i][j]=MINAOCULTA;
+						tableroOculto[i][j]=MINA_OCULTA;
 					}
 				}
 				
@@ -108,44 +219,44 @@ public class buscaminas {
 	private static void colocarNumeros(int tableroOculto[][]){
 		for (int i=0;i<FILAS;i++){
 			for (int j=0;j<COLUMNAS;j++){
-				if (tableroOculto[i][j]==MINAOCULTA) {
+				if (tableroOculto[i][j]==MINA_OCULTA) {
 					try {
-						if (tableroOculto[i-1][j-1]!=MINAOCULTA) {
+						if (tableroOculto[i-1][j-1]!=MINA_OCULTA) {
 							tableroOculto[i-1][j-1]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i-1][j]!=MINAOCULTA) {
+						if (tableroOculto[i-1][j]!=MINA_OCULTA) {
 							tableroOculto[i-1][j]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i-1][j+1]!=MINAOCULTA) {
+						if (tableroOculto[i-1][j+1]!=MINA_OCULTA) {
 							tableroOculto[i-1][j+1]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i][j-1]!=MINAOCULTA) {
+						if (tableroOculto[i][j-1]!=MINA_OCULTA) {
 							tableroOculto[i][j-1]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i][j+1]!=MINAOCULTA) {
+						if (tableroOculto[i][j+1]!=MINA_OCULTA) {
 							tableroOculto[i][j+1]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i+1][j-1]!=MINAOCULTA) {
+						if (tableroOculto[i+1][j-1]!=MINA_OCULTA) {
 							tableroOculto[i+1][j-1]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i+1][j]!=MINAOCULTA) {
+						if (tableroOculto[i+1][j]!=MINA_OCULTA) {
 							tableroOculto[i+1][j]++;
 						}
 					}catch(Exception e) {}
 					try {
-						if (tableroOculto[i+1][j+1]!=MINAOCULTA) {
+						if (tableroOculto[i+1][j+1]!=MINA_OCULTA) {
 							tableroOculto[i+1][j+1]++;
 						}
 					}catch(Exception e) {}
@@ -164,13 +275,13 @@ public class buscaminas {
 		
 		
 	}
-	private static void inicializar(int tableroi[][], char tableroc[][]) {
-		for(int i=0;i<FILAS-1;i++) {
-			for(int c=0;c<COLUMNAS-1;c++) {
-				tableroi[i][c]=0;
-				tableroc[i][c]=NO_DESCUBIERTO;
+	private static void inicializar(int tableroOculto[][], char tableroVisible[][]) {
+		for(int i=0;i<FILAS;i++) {
+			for(int j=0;j<COLUMNAS;j++) {
+				tableroOculto[i][j]=VACIO_OCULTO;
+				tableroVisible[i][j]=NO_DESCUBIERTO;
 				}
-			}	
+			}
 		}
 	private static String posicion() {
 		Scanner sc = new Scanner(System.in);
@@ -191,22 +302,6 @@ public class buscaminas {
 
 	return posicion;
 }
-	private static boolean comprobarFinal (char [][] tableroVisible) {
-		int contador=0;
-		for (int i=0; i<FILAS;i++) {
-			for (int j=0; j<COLUMNAS;j++) {
-				if (tableroVisible[i][j]==NO_DESCUBIERTO) {
-					contador++;
-				}
-			}
-		}
-		if (contador==MINAS) {
-			return true;
-		}else {
-			return false;
-		}
-		
-	}
 	
 	private static boolean FormatoCorrecto(String posicion) {
 		boolean datoValido;
@@ -221,36 +316,35 @@ public class buscaminas {
             int columna = Integer.parseInt(partes[1]);//funcion buscada en internet.
 
             // verifica que fila y columna sean números positivos
-             return fila >= 0 && columna >= 0 && fila<FILAS-1 && columna<COLUMNAS-1;
+             return fila >= 0 && columna >= 0 && fila<FILAS && columna<COLUMNAS;
         } catch (NumberFormatException e) {
             return datoValido=false; 
         }
     }
-}
-private static void eleccionPos(String posicion, int[][] tableroOculto) {
-	char charF, charC;
-    charF=posicion.charAt(0);
-    charC=posicion.charAt(2);
-    int numF= Character.getNumericValue(charF);
-    int numC = Character.getNumericValue(charC);
-    boolean bomba= comprobarMina(posicion, tableroOculto ,numC , numF);
-    if(bomba==true) {
-    	System.out.println("usted perdio");
-    	imprimirTableroOculto(tableroOculto);
-    }
- 
-    
-	
-}
-private static boolean comprobarMina(String posicion, int tableroOculto[][],int numC, int numF) {
-	if (tableroOculto[numF][numC]==MINAOCULTA) {
+	private static boolean eleccionPos(String posicion, int[][] tableroOculto) {
+		char charF, charC;
+	    charF=posicion.charAt(0);
+	    charC=posicion.charAt(2);
+	    int numF= Character.getNumericValue(charF);
+	    int numC = Character.getNumericValue(charC);
+	    boolean bomba= comprobarMina(posicion, tableroOculto ,numC , numF);
+	    if(bomba==true) {
+	    	return true;
+	    }else {
+	    	return false;
+	    }
+	 
+	    
 		
-		return true;
 	}
-	else {
-		return false;
+	private static boolean comprobarMina(String posicion, int tableroOculto[][],int numC, int numF) {
+		if (tableroOculto[numF][numC]==MINA_OCULTA) {
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
-}
-
 	
 }
