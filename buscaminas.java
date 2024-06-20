@@ -1,8 +1,9 @@
 package Intento1;
+//Wagner Bruno
+//Jueguen Martin Francisco
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.Scanner;
 public class buscaminas {
-	
 	private static final int FILAS = 9;
 	private static final int COLUMNAS = 9;
 	private static final int MINAS = 10;
@@ -12,7 +13,6 @@ public class buscaminas {
 	private static final int MINA_OCULTA = -1;
 	private static final int VACIO_OCULTO = 0;
 	private static final int NUMERO_CARACTER = 48;
-	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		int tableroOculto[][]=new int [FILAS][COLUMNAS];
@@ -41,6 +41,7 @@ public class buscaminas {
 				}
 			}
 		}
+		imprimirTableroOculto(tableroOculto);
 	}
 	private static void descubrirTablero (int [][]tableroOculto, char [][]tableroVisible, String posicion) {
 		char charF, charC;
@@ -177,20 +178,6 @@ public class buscaminas {
 					}
 				}
 			}
-		}
-	}
-	private static void imprimirTableroOculto(int tableroOculto[][]) {
-		System.out.print("  ");
-		for (int i=0;i<FILAS;i++) {
-			System.out.print(+i+" ");
-		}
-		System.out.println();
-		for (int i=0; i<FILAS; i++) {
-			System.out.print(i+ " ");
-			for (int j=0; j<COLUMNAS; j++) {
-				System.out.print( tableroOculto[i][j]+" ");
-			}
-			System.out.println();
 		}
 	}
 	private static void imprimirTableroVisible(char tableroVisible[][]) {
