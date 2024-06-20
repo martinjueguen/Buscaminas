@@ -41,7 +41,6 @@ public class buscaminas {
 				}
 			}
 		}
-		imprimirTableroOculto(tableroOculto);
 	}
 	private static void descubrirTablero (int [][]tableroOculto, char [][]tableroVisible, String posicion) {
 		char charF, charC;
