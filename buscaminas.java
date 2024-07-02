@@ -167,7 +167,7 @@ public class buscaminas {
 			igual=true;
 			while(igual==true) {
 				igual=false;
-				posicionMinas[i] = ThreadLocalRandom.current().nextInt(1, 81);
+				posicionMinas[i] = ThreadLocalRandom.current().nextInt(1, FILAS*COLUMNAS);
 				for (int j=0; j<i;j++) {
 					if (posicionMinas[i]==posicionMinas[j]) {
 						igual=true;
